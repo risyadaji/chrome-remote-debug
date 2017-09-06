@@ -28,3 +28,11 @@ run: builddocker
 		--env-file $(ENVFILE) \
 		--volume ${CURDIR}/extensions:/extensions \
 		$(DOCKER_IMAGE_NAME):$(TAG)
+
+version: builddocker
+	docker run \
+		--name chrome \
+		--rm \
+		$(DOCKER_IMAGE_NAME):$(TAG) \
+		google-chrome \
+		--version

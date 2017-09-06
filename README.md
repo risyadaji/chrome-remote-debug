@@ -1,6 +1,6 @@
 # Chrome-remote-debug docker with VNC
 
-A Google Chrome docker with VNC and chrome remote debugging enabled. 
+A Google Chrome docker with VNC and chrome remote debugging enabled.
 The remote debugging port is exposed with the use of socat. Everything is managed by supervisord.
 
 # Running the docker image
@@ -20,6 +20,14 @@ The commandline configuration for chrome can be changed by setting environment v
 
 - 9222: The remote-debugging port of Google Chrome is forwarded by socat
 - 5900: VNC server on port 5900
+
+# Extracting the Chrome version number
+
+    make version
+
+With this version number a new image can be released
+
+    make TAG=60.0.3112.101 push
 
 # Viewing Chrome logs
 
