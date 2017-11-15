@@ -27,7 +27,7 @@ The commandline configuration for chrome can be changed by setting environment v
 
 With this version number a new image can be released
 
-    make TAG=60.0.3112.101 push
+    make TAG=60.0.3112.101 builddocker push
 
 # Viewing Chrome logs
 
