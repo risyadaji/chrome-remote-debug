@@ -10,7 +10,7 @@ RUN	apt-get update \
 COPY etc/apt /etc/apt
 COPY tmp /tmp
 
-ENV LAST_CHROME_UPDATE 2018-01-24
+ENV LAST_CHROME_UPDATE 2018-03-06
 # Copied the signing key from https://dl.google.com/linux/linux_signing_key.pub
 RUN	apt-key add /tmp/linux_signing_key.pub \
 	&& apt-get update \
@@ -26,6 +26,7 @@ VOLUME ["/home/chrome"]
 EXPOSE 5900
 EXPOSE 9222
 
+COPY etc/opt/chrome/policies/managed /etc/opt/chrome/policies/managed
 COPY supervisord.conf.template /
 COPY run.sh /
 CMD ["/run.sh"]
