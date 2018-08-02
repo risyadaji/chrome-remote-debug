@@ -19,6 +19,7 @@ command=/opt/google/chrome/chrome --user-data-dir=/home/chrome
                                   --no-sandbox
                                   --dbus-stub
                                   --disable-gpu
+                                  --use-gl=angle
                                   --mute-audio
                                   --enable-logging=stderr
                                   --log-level=0
