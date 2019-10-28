@@ -27,6 +27,7 @@ run: builddocker
 		--shm-size=1g \
 		--env-file $(ENVFILE) \
 		--volume ${CURDIR}/extensions:/extensions \
+		--volume /:/home/chrome \
 		$(DOCKER_IMAGE_NAME):$(TAG)
 
 version: builddocker
