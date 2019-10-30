@@ -50,5 +50,10 @@ COPY docker/chrome/supervisord.conf.template /
 COPY docker/chrome/run.sh /
 COPY docker/entrypoint.sh /
 
+ENV width=1366
+ENV height=768
+ENV lang=en
+ENV extra_chrome_args=--disable-popup-blocking
+
 RUN chmod +x /entrypoint.sh
 CMD ["./entrypoint.sh"]
