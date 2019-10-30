@@ -37,6 +37,10 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 RUN addgroup chrome-remote-debugging \
 	&& useradd -m -G chrome-remote-debugging chrome 
 
+EXPOSE 9222
+EXPOSE 9000
+EXPOSE 5222
+
 RUN apt-get install -y ca-certificates tzdata
 COPY --from=builder /go/bin /bin
 
