@@ -3,6 +3,7 @@ package statement
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"mime/multipart"
@@ -60,16 +61,17 @@ func uploadFile(p Payload) error {
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
+
 	part, err := writer.CreateFormFile("data", filepath.Base(path))
 	if err != nil {
 		return err
 	}
-
 	if _, err := io.Copy(part, file); err != nil {
 		return err
 	}
-
-	writer.WriteField("accountName", p.AccountName)
+	if err := writer.WriteField("accountName", p.AccountName); err != nil {
+		return err
+	}
 
 	if err := writer.Close(); err != nil {
 		return err
@@ -81,9 +83,18 @@ func uploadFile(p Payload) error {
 	req.Header.Set("Cache-Control", "no-cache")
 
 	client := &http.Client{}
-	if _, err := client.Do(req); err != nil {
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Delete file
+	if err := os.Remove(path); err != nil {
 		log.Fatal(err)
 		return err
+	}
+	if res.StatusCode >= 400 {
+		return fmt.Errorf(res.Status)
 	}
 
 	return nil
