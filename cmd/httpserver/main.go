@@ -9,5 +9,5 @@ import (
 func main() {
 	// start api server
 	s := httpserver.NewServer()
-	s.Serve("8080")
+	s.Serve("8000")
 }
