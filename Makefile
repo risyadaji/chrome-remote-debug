@@ -1,9 +1,9 @@
 # Copyright 2018 Payfazz Agent Authors.
 
 # The default docker image name
-APP_NAME := chrome-headfull
+APP_NAME := bank-scraper
 
-CHROME_IMAGE := chrome-remote
+CHROME_IMAGE := chrome-headful
 # This version-strategy uses git tags to set the version string
 VERSION := $(shell git describe --tags --always --dirty)
 
