@@ -18,8 +18,8 @@ import (
 
 // Payload ...
 type Payload struct {
-	BankName    string `json:"bankName"`
 	AccountName string `json:"accountName"`
+	PostDate    string `json:"postDate"`
 	FileName    string `json:"fileName"`
 	UploadLink  string `json:"uploadLink"`
 	APIKey      string `json:"apiKey"`
@@ -69,9 +69,9 @@ func uploadFile(p Payload) error {
 	if _, err := io.Copy(part, file); err != nil {
 		return err
 	}
-	if err := writer.WriteField("accountName", p.AccountName); err != nil {
-		return err
-	}
+
+	writer.WriteField("accountName", p.AccountName)
+	writer.WriteField("postDate", p.PostDate)
 
 	if err := writer.Close(); err != nil {
 		return err
@@ -87,8 +87,8 @@ func uploadFile(p Payload) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	log.Println(res.StatusCode, res.Status)
+
 	// Delete file
 	if err := os.Remove(path); err != nil {
 		log.Fatal(err)
