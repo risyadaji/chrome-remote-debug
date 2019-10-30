@@ -88,6 +88,7 @@ func uploadFile(p Payload) error {
 		log.Fatal(err)
 	}
 
+	log.Println(res.StatusCode, res.Status)
 	// Delete file
 	if err := os.Remove(path); err != nil {
 		log.Fatal(err)
