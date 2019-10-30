@@ -37,9 +37,6 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 RUN addgroup chrome-remote-debugging \
 	&& useradd -m -G chrome-remote-debugging chrome 
 
-EXPOSE 5900
-EXPOSE 9222
-
 RUN apt-get install -y ca-certificates tzdata
 COPY --from=builder /go/bin /bin
 
@@ -47,5 +44,7 @@ COPY --from=builder /go/bin /bin
 COPY docker/chrome/etc/opt/chrome/policies/managed /etc/opt/chrome/policies/managed
 COPY docker/chrome/supervisord.conf.template /
 COPY docker/chrome/run.sh /
+COPY docker/entrypoint.sh /
 
-CMD ["./run.sh", "/bin/httpserver"]
+RUN chmod +x /entrypoint.sh
+CMD ["./entrypoint.sh"]
