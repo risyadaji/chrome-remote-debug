@@ -28,7 +28,7 @@ const (
 )
 
 func (e *env) ChromeDownloadPath() string {
-	return getStringOrDefault(chromeDownloadPath, "/home/chrome/Downloads")
+	return getStringOrDefault(chromeDownloadPath, "/home/chrome/Downloads/")
 
 }
 
