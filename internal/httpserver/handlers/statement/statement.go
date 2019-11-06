@@ -89,12 +89,7 @@ func uploadFile(p Payload) (*UploadResponse, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// Delete file
-	if err := os.Remove(path); err != nil {
-		log.Fatal(err)
-		return nil, err
-	}
+	defer res.Body.Close()
 
 	if res.StatusCode >= 400 {
 		return nil, fmt.Errorf(res.Status)
@@ -105,6 +100,12 @@ func uploadFile(p Payload) (*UploadResponse, error) {
 		return nil, err
 	}
 	log.Println(response)
+
+	// Delete file
+	if err := os.Remove(path); err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
 
 	return &response, nil
 }
