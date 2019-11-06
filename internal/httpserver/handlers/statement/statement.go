@@ -16,13 +16,18 @@ import (
 	"github.com/payfazz/chrome-remote-debug/config"
 )
 
-// Payload ...
+// Payload represents params for upload
 type Payload struct {
 	AccountName string `json:"accountName"`
 	PostDate    string `json:"postDate"`
 	FileName    string `json:"fileName"`
 	UploadLink  string `json:"uploadLink"`
 	APIKey      string `json:"apiKey"`
+}
+
+// UploadResponse represent responses data after upload
+type UploadResponse struct {
+	TotalStatement int `json:"totalStatement"`
 }
 
 // GetHandler ..
@@ -34,28 +39,26 @@ func GetHandler() http.HandlerFunc {
 			return
 		}
 
-		if err := uploadFile(p); err != nil {
+		res, err := uploadFile(p)
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
-		response.JSON(w, http.StatusOK, http.StatusOK)
+		response.JSON(w, http.StatusOK, res)
 		return
 	}
 }
 
 // UploadFile ...
-func uploadFile(p Payload) error {
-	var path string
-	if config.ChromeDownloadPath() != "" {
-		path = config.ChromeDownloadPath()
-	}
+func uploadFile(p Payload) (*UploadResponse, error) {
+	path := config.ChromeDownloadPath()
 	path += p.FileName
 	log.Println(path)
 
 	file, err := os.Open(path)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer file.Close()
 
@@ -64,17 +67,16 @@ func uploadFile(p Payload) error {
 
 	part, err := writer.CreateFormFile("data", filepath.Base(path))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if _, err := io.Copy(part, file); err != nil {
-		return err
+		return nil, err
 	}
 
 	writer.WriteField("accountName", p.AccountName)
 	writer.WriteField("postDate", p.PostDate)
-
 	if err := writer.Close(); err != nil {
-		return err
+		return nil, err
 	}
 
 	req, err := http.NewRequest("POST", p.UploadLink, body)
@@ -87,16 +89,22 @@ func uploadFile(p Payload) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(res.StatusCode, res.Status)
 
 	// Delete file
 	if err := os.Remove(path); err != nil {
 		log.Fatal(err)
-		return err
-	}
-	if res.StatusCode >= 400 {
-		return fmt.Errorf(res.Status)
+		return nil, err
 	}
 
-	return nil
+	if res.StatusCode >= 400 {
+		return nil, fmt.Errorf(res.Status)
+	}
+
+	var response UploadResponse
+	if err := json.NewDecoder(res.Body).Decode(&response); err != nil {
+		return nil, err
+	}
+	log.Println(response)
+
+	return &response, nil
 }
