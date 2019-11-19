@@ -160,6 +160,7 @@ github.com/onsi/gomega v1.5.0/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1Cpa
 github.com/opencontainers/go-digest v1.0.0-rc1/go.mod h1:cMLVZDEM3+U2I4VmLI6N8jQYUd2OVphdqWwCJHrFt2s=
 github.com/openzipkin/zipkin-go v0.1.1/go.mod h1:NtoC/o8u3JlF1lSlyPNswIbeQH9bJTmOf0Erfk+hxe8=
 github.com/openzipkin/zipkin-go v0.1.3/go.mod h1:NtoC/o8u3JlF1lSlyPNswIbeQH9bJTmOf0Erfk+hxe8=
+github.com/payfazz/bank-scraper v0.0.1 h1:EqvtXvUBEuV4p0RI4DB7FWMWMAgUDhDD61Q3HQZ1Ai4=
 github.com/payfazz/chrome-remote-debug v0.0.0-20191016025518-12b7d648f947 h1:pLLuMwec+Fx+NJwogNVWDdUPyhOmes96raYz0ugG9j0=
 github.com/payfazz/chrome-remote-debug v0.0.0-20191016025518-12b7d648f947/go.mod h1:Ty8fbR1G9VSdWPcC7CG9QYe/dR7dmJSaFLnviZco7wU=
 github.com/payfazz/golib v0.0.0-20181015104121-cb7390857709/go.mod h1:HW4fo/YL1I9Eli9yk3RGIe8qCAykPBCxba1oHyQV8kM=

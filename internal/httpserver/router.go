@@ -7,6 +7,7 @@ import (
 	chimw "github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 
+	"github.com/payfazz/chrome-remote-debug/internal/httpserver/handlers/file"
 	"github.com/payfazz/chrome-remote-debug/internal/httpserver/handlers/statement"
 	"github.com/payfazz/chrome-remote-debug/internal/httpserver/handlers/status"
 )
@@ -37,6 +38,8 @@ func (hs *HTTPServer) compileRouter() chi.Router {
 
 	// create endpoint for server http request
 	r.Method("GET", "/status", status.GetHandler())
+	r.Method("GET", "/file", file.GetFileHandler())
+	r.Method("GET", "/files", file.GetFilesHandler())
 	r.Method("POST", "/statement", statement.GetHandler())
 	return r
 }
